@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,22 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerController PlayerController;
 
     public TurnManager TurnManager;
+
+    [SerializeField] UIDocument _UIDoc;
+    Label _FoodLabel;
+
+    int _FoodAmount = 100;
+
+    void OnTurnHappen()
+    {
+        ChangeFood(-1);
+    }
+
+    public void ChangeFood(int amount)
+    {
+        _FoodAmount += amount;
+        _FoodLabel.text = "Food: " + _FoodAmount;
+    }
 
     void Awake()
     {
@@ -22,7 +39,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        _FoodLabel = _UIDoc.rootVisualElement.Q<Label>("FoodLabel");
+        _FoodLabel.text = "Food: " + _FoodAmount;
+
         TurnManager = new TurnManager();
+        TurnManager.OnTicke += OnTurnHappen;
 
         BoardManager.Init();
         PlayerController.Spawn(BoardManager, new Vector2Int(1,1));
