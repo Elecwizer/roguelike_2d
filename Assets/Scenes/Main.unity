@@ -312,6 +312,7 @@ MonoBehaviour:
   - {fileID: 8731253610635570357, guid: 18e128a7f5288bd46b8c19453397f285, type: 3}
   - {fileID: 1431051412813195805, guid: 2b09a0b88cdd3de43bcec7e1bd56d601, type: 3}
   - {fileID: 6348816688461039066, guid: a19455d6681716540a6c0cd1a72f063a, type: 3}
+  _WallPrefab: {fileID: 3806945442301711321, guid: 3dfda845821071b4e89a10947a20c144, type: 3}
   _width: 10
   _height: 10
   _groundTiles:

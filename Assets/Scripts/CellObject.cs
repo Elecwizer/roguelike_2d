@@ -2,19 +2,20 @@ using UnityEngine;
 
 public class CellObject : MonoBehaviour
 {
+    protected Vector2Int _Cell;
+
+    public virtual void Init(Vector2Int cell)
+    {
+        _Cell = cell;
+    }
 
     public virtual void PlayerEntered()
     {
-        
-    }
-    
-    void Start()
-    {
-        
+
     }
 
-    void Update()
+    public virtual bool PlayerWantsToEnter()
     {
-        
+        return true;
     }
 }

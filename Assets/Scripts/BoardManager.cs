@@ -8,6 +8,16 @@ public class BoardManager : MonoBehaviour
     int _FoodLowerLimit = 1;
     int _FoodUpperLimit = 6;
 
+    [SerializeField] WallObject _WallPrefab;
+
+    void AddObject(CellObject obj, Vector2Int coord)
+    {
+        CellData data = _BoardData[coord.x, coord.y];
+        obj.transform.position = CellToWorld(coord);
+        data.ContainedObject = obj;
+        obj.Init(coord);
+    }
+
     void GenerateFood()
     {
         int foodCount = Random.Range(_FoodLowerLimit, _FoodUpperLimit);
@@ -16,13 +26,31 @@ public class BoardManager : MonoBehaviour
             int randomIndex = Random.Range(0, _EmptyCellsList.Count);
             Vector2Int coord = _EmptyCellsList[randomIndex];
             _EmptyCellsList.RemoveAt(randomIndex);
-
-            CellData data = _BoardData[coord.x, coord.y];
             FoodObject newFood = Instantiate(_FoodPrefab[Random.Range(0, _FoodPrefab.Length)]);
-            newFood.transform.position = CellToWorld(coord);
-            data.ContainedObject = newFood;
+
+            AddObject(newFood, coord);
         }
     }
+
+    void GenerateWall()
+    {
+        int wallCount = Random.Range(5, 11);
+        for (int i = 0; i < wallCount; i++)
+        {
+            int randomIndex = Random.Range(0, _EmptyCellsList.Count);
+            Vector2Int coord = _EmptyCellsList[randomIndex];
+            _EmptyCellsList.RemoveAt(randomIndex);
+            WallObject newWall = Instantiate(_WallPrefab);
+
+            AddObject(newWall, coord);
+        }
+    }
+
+    public void SetCellTile(Vector2Int cellIndex, Tile tile)
+    {
+        _Tilemap.SetTile(new Vector3Int(cellIndex.x, cellIndex.y, 0), tile);
+    }
+
     public class CellData
     {
         public bool Passable;
@@ -90,11 +118,12 @@ public class BoardManager : MonoBehaviour
         }
 
         _EmptyCellsList.Remove(new Vector2Int(1,1));
+        GenerateWall();
         GenerateFood();
     }
 
-    void Update()
+    public Tile GetCellTile(Vector2Int cellIndex)
     {
-        
+        return _Tilemap.GetTile<Tile>(new Vector3Int(cellIndex.x, cellIndex.y, 0));
     }
 }

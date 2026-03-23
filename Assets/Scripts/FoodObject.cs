@@ -10,13 +10,4 @@ public class FoodObject : CellObject
         
         GameManager.Instance.ChangeFood(AmountGranted);
     }
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 }
