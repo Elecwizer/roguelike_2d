@@ -13,7 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] UIDocument _UIDoc;
     Label _FoodLabel;
 
-    int _FoodAmount = 100;
+    int _FoodAmount = 20;
+
+    int _CurrentLevel = 0;
+
+    VisualElement _GameOverScreen;
+    Label _GameOverMessage;
 
     void OnTurnHappen()
     {
@@ -24,6 +29,22 @@ public class GameManager : MonoBehaviour
     {
         _FoodAmount += amount;
         _FoodLabel.text = "Food: " + _FoodAmount;
+
+        if(_FoodAmount <= 0)
+        {
+            PlayerController.GameOver();
+            _GameOverScreen.style.visibility = Visibility.Visible;
+            _GameOverMessage.text = "Game Over!\n\nYou survived through " + _CurrentLevel + " days\n\nPress enter key to restart";
+        }
+    }
+
+    public void NewLevel()
+    {
+        BoardManager.Clean();
+        BoardManager.Init();
+        PlayerController.Spawn(BoardManager, new Vector2Int(1,1));
+
+        _CurrentLevel++;
     }
 
     void Awake()
@@ -39,18 +60,29 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        _GameOverScreen = _UIDoc.rootVisualElement.Q<VisualElement>("GameOverScreen");
+        _GameOverMessage = _GameOverScreen.Q<Label>("GameOverMessage");
+
         _FoodLabel = _UIDoc.rootVisualElement.Q<Label>("FoodLabel");
-        _FoodLabel.text = "Food: " + _FoodAmount;
 
         TurnManager = new TurnManager();
         TurnManager.OnTicke += OnTurnHappen;
 
-        BoardManager.Init();
-        PlayerController.Spawn(BoardManager, new Vector2Int(1,1));
+        StartNewGame();
     }
 
-    void Update()
+    public void StartNewGame()
     {
-        
+        _GameOverScreen.style.visibility = Visibility.Hidden;
+
+        _CurrentLevel = 0;
+        _FoodAmount = 20;
+        _FoodLabel.text = "Food: " + _FoodAmount;
+
+        BoardManager.Clean();
+        BoardManager.Init();
+
+        PlayerController.Init();
+        PlayerController.Spawn(BoardManager, new Vector2Int(1,1));
     }
 }

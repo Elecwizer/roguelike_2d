@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public class BoardManager : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class BoardManager : MonoBehaviour
     int _FoodUpperLimit = 6;
 
     [SerializeField] WallObject _WallPrefab;
+
+    [SerializeField] ExitCellObject _ExitCellObject;
 
     void AddObject(CellObject obj, Vector2Int coord)
     {
@@ -112,12 +115,16 @@ public class BoardManager : MonoBehaviour
 
                     _EmptyCellsList.Add(new Vector2Int(x, y));
                 }
-                
+
                 _Tilemap.SetTile(new Vector3Int(x, y, 0), tile);
             }
         }
 
         _EmptyCellsList.Remove(new Vector2Int(1,1));
+        Vector2Int endCoord = new Vector2Int(_width - 2, _height - 2);
+        AddObject(Instantiate(_ExitCellObject), endCoord);
+        _EmptyCellsList.Remove(endCoord);
+
         GenerateWall();
         GenerateFood();
     }
@@ -125,5 +132,25 @@ public class BoardManager : MonoBehaviour
     public Tile GetCellTile(Vector2Int cellIndex)
     {
         return _Tilemap.GetTile<Tile>(new Vector3Int(cellIndex.x, cellIndex.y, 0));
+    }
+
+    public void Clean()
+    {
+        if(_BoardData == null)
+            return;
+
+        for(int y = 0; y < _height; y++)
+        {
+            for(int x = 0; x < _width; x++)
+            {
+                var cellData =_BoardData[x, y];
+                if(cellData.ContainedObject != null)
+                {
+                    Destroy(cellData.ContainedObject.gameObject);
+                }
+
+                SetCellTile(new Vector2Int(x, y), null);
+            }
+        }
     }
 }
