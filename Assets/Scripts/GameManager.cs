@@ -28,14 +28,18 @@ public class GameManager : MonoBehaviour
     public void ChangeFood(int amount)
     {
         _FoodAmount += amount;
-        _FoodLabel.text = "Food: " + _FoodAmount;
+        
 
         if(_FoodAmount <= 0)
         {
+            _FoodLabel.text = "Food: 0";
             PlayerController.GameOver();
             _GameOverScreen.style.visibility = Visibility.Visible;
             _GameOverMessage.text = "Game Over!\n\nYou survived through " + _CurrentLevel + " days\n\nPress enter key to restart";
+            return;
         }
+
+        _FoodLabel.text = "Food: " + _FoodAmount;
     }
 
     public void NewLevel()

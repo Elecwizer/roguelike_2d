@@ -279,6 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e3049c720ffb84091d3baf280d714f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  _Animator: {fileID: 0}
+  _CellPosition: {x: 0, y: 0}
 --- !u!95 &1262958965
 Animator:
   serializedVersion: 7
@@ -335,6 +337,8 @@ MonoBehaviour:
   - {fileID: 8731253610635570357, guid: 18e128a7f5288bd46b8c19453397f285, type: 3}
   - {fileID: 1431051412813195805, guid: 2b09a0b88cdd3de43bcec7e1bd56d601, type: 3}
   - {fileID: 6348816688461039066, guid: a19455d6681716540a6c0cd1a72f063a, type: 3}
+  _Zombie: {fileID: 8483721283418532581, guid: 615cfd16272d55549a9096f0dce3dd71, type: 3}
+  _Slime: {fileID: 3555075252188795930, guid: afcf27ba31fa0e84e92f6b318281a693, type: 3}
   _WallPrefab: {fileID: 3806945442301711321, guid: 3dfda845821071b4e89a10947a20c144, type: 3}
   _ExitCellObject: {fileID: 2621587718712061713, guid: cf2360a977b73764a9ffa9c68f8586bb, type: 3}
   _width: 10

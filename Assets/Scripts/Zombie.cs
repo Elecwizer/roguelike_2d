@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NewMonoBehaviourScript : CellObject
+public class Zombie : CellObject
 {
     public int Health = 3;
     int _CurrentHealth;
@@ -65,7 +65,7 @@ public class NewMonoBehaviourScript : CellObject
 
         if((xDist == 0 && absYDist == 1) || (yDist == 0 && absXDist == 1))
         {
-            GameManager.Instance.ChangeFood(-3);
+            GameManager.Instance.ChangeFood(-2);
         }
         else
         {

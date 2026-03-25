@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 public class WallObject : CellObject
 {
     [SerializeField] Tile[] _ObstacleTile;
-    public int MaxHealth = 3;
+    public int MaxHealth = 2;
 
     int _HealthPoint;
     Tile _OriginalTile;

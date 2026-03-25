@@ -5,8 +5,16 @@ using System.Collections.Generic;
 public class BoardManager : MonoBehaviour
 {
     [SerializeField] FoodObject[] _FoodPrefab;
-    int _FoodLowerLimit = 1;
+    int _FoodLowerLimit = 2;
     int _FoodUpperLimit = 6;
+
+    [SerializeField] Zombie _Zombie;
+    int _ZombieLowerLimit = 1;
+    int _ZombieUpperLimit = 2;
+
+    [SerializeField] Slime _Slime;
+    int _SlimeLowerLimit = 1;
+    int _SlimeeUpperLimit = 3;
 
     [SerializeField] WallObject _WallPrefab;
 
@@ -50,7 +58,27 @@ public class BoardManager : MonoBehaviour
 
     void GenerateEnemies()
     {
-        //work in progress
+        int zombieCount = Random.Range(_ZombieLowerLimit, _ZombieUpperLimit);
+        for (int i = 0; i < zombieCount; i++)
+        {
+            int randomIndex = Random.Range(0, _EmptyCellsList.Count);
+            Vector2Int coord = _EmptyCellsList[randomIndex];
+            _EmptyCellsList.RemoveAt(randomIndex);
+            Zombie newZombie = Instantiate(_Zombie);
+
+            AddObject(newZombie, coord);
+        }
+
+        int slimeCount = Random.Range(_SlimeLowerLimit, _SlimeeUpperLimit);
+        for (int i = 0; i < slimeCount; i++)
+        {
+            int randomIndex = Random.Range(0, _EmptyCellsList.Count);
+            Vector2Int coord = _EmptyCellsList[randomIndex];
+            _EmptyCellsList.RemoveAt(randomIndex);
+            Slime newSlime = Instantiate(_Slime);
+
+            AddObject(newSlime, coord);
+        }
     }
 
     public void SetCellTile(Vector2Int cellIndex, Tile tile)
@@ -133,6 +161,7 @@ public class BoardManager : MonoBehaviour
 
         GenerateWall();
         GenerateFood();
+        GenerateEnemies();
     }
 
     public Tile GetCellTile(Vector2Int cellIndex)
