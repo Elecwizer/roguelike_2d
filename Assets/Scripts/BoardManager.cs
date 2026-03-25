@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 
 public class BoardManager : MonoBehaviour
 {
@@ -47,6 +46,11 @@ public class BoardManager : MonoBehaviour
 
             AddObject(newWall, coord);
         }
+    }
+
+    void GenerateEnemies()
+    {
+        //work in progress
     }
 
     public void SetCellTile(Vector2Int cellIndex, Tile tile)
@@ -124,6 +128,8 @@ public class BoardManager : MonoBehaviour
         Vector2Int endCoord = new Vector2Int(_width - 2, _height - 2);
         AddObject(Instantiate(_ExitCellObject), endCoord);
         _EmptyCellsList.Remove(endCoord);
+
+        GameManager.Instance.PlayerController._Animator.SetBool("Moving", false);
 
         GenerateWall();
         GenerateFood();

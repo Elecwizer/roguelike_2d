@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {get; private set;}
 
     public BoardManager BoardManager;
-    [SerializeField] PlayerController PlayerController;
+    public PlayerController PlayerController;
 
     public TurnManager TurnManager;
 
