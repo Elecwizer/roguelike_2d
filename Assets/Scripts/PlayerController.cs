@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     public Animator _Animator;
 
     bool _IsGameOver;
+    public bool _isPaused;
     bool  _hasMoved;
 
     BoardManager _Board;
@@ -41,6 +42,10 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (_isPaused)
+        {
+            return;
+        }
 
        Vector2Int newCellTarget = _CellPosition;
         _hasMoved = false;
